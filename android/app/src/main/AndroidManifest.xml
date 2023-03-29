@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.doviz_kurlari">
    <application
-        android:label="doviz_kurlari"
+        android:label="Döviz Kurları"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
