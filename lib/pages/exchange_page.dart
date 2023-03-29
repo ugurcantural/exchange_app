@@ -104,7 +104,8 @@ class _ExchangePageState extends State<ExchangePage> {
                     ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      LengthLimitingTextInputFormatter(7)
+                      LengthLimitingTextInputFormatter(7),
+                      LimitRangeTextInputFormatter(0, 1000000),
                     ],
                     controller: _controller,
                     onChanged: (value) {
