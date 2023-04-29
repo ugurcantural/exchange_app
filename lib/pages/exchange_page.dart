@@ -38,116 +38,118 @@ class _ExchangePageState extends State<ExchangePage> {
         future: doviz,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-            return Column(
-              children: [
-                SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          dropdownColor: Colors.black,
-                          alignment: Alignment.center,
-                          value: _selectedItem,
-                          onChanged: (newValue) {
-                            setState(() {
-                              _selectedItem = newValue.toString();
-                              // print(_selectedItem);
-                            });
-                          },
-                          items: adlar.map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset("assets/images/${adlar.indexOf(item) + 1}.png", width: 25, height: 25),
-                                  SizedBox(width: 5),
-                                  Text(item),
-                                  SizedBox(width: 5),
-                                  Text(snapshot.data[turler[adlar.indexOf(item)]]["alis"].toString()),
-                                ],
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  dovizIndex = adlar.indexOf(item);
-                                });
-                                // print(adlar.indexOf(item));
-                              },
-                          )).toList(),
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            dropdownColor: Colors.black,
+                            alignment: Alignment.center,
+                            value: _selectedItem,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedItem = newValue.toString();
+                                // print(_selectedItem);
+                              });
+                            },
+                            items: adlar.map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset("assets/images/${adlar.indexOf(item) + 1}.png", width: 25, height: 25),
+                                    SizedBox(width: 5),
+                                    Text(item),
+                                    SizedBox(width: 5),
+                                    Text(snapshot.data[turler[adlar.indexOf(item)]]["alis"].toString()),
+                                  ],
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    dovizIndex = adlar.indexOf(item);
+                                  });
+                                  // print(adlar.indexOf(item));
+                                },
+                            )).toList(),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 25),
-                Container(
-                  width: 200,
-                  child: TextField(
-                    cursorColor: Colors.white,
-                    textAlign: TextAlign.center,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                      hintText: "Bir fiyat giriniz..",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10)
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(7),
-                      LimitRangeTextInputFormatter(0, 1000000),
                     ],
-                    controller: _controller,
-                    onChanged: (value) {
-                        try {
-                          girilenDeger = int.parse(value);
-                        } catch (e) {
-                          print("hata"); 
-                        }
-                      setState(() {});
-                    },
                   ),
-                ),
-                SizedBox(height: 25),
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.center,
-                  // spacing: 5,
-                  children: [
-                    Text("$girilenDeger ", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30)),
-                    Image.asset("assets/images/${dovizIndex + 1}.png", width: 30, height: 30),
-                    Text(
-                      " = ${(double.parse(snapshot.data[turler[dovizIndex]]["alis"]) * girilenDeger).toStringAsFixed(2)} ",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),
+                  SizedBox(height: 25),
+                  Container(
+                    width: 200,
+                    child: TextField(
+                      cursorColor: Colors.white,
+                      textAlign: TextAlign.center,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        hintText: "Bir fiyat giriniz..",
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(7),
+                        LimitRangeTextInputFormatter(0, 1000000),
+                      ],
+                      controller: _controller,
+                      onChanged: (value) {
+                          try {
+                            girilenDeger = int.parse(value);
+                          } catch (e) {
+                            print("hata"); 
+                          }
+                        setState(() {});
+                      },
                     ),
-                    Image.asset("assets/images/10.png", width: 30, height: 30),
-                  ],
-                ),
-                SizedBox(height: 25),
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    Text("$girilenDeger ", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30)),
-                    Image.asset("assets/images/10.png", width: 30, height: 30),
-                    Text(
-                      " = ${(girilenDeger / double.parse(snapshot.data[turler[dovizIndex]]["alis"])).toStringAsFixed(2)} ",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),
-                    ),
-                    Image.asset("assets/images/${dovizIndex + 1}.png", width: 30, height: 30),
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(height: 25),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.center,
+                    // spacing: 5,
+                    children: [
+                      Text("$girilenDeger ", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30)),
+                      Image.asset("assets/images/${dovizIndex + 1}.png", width: 30, height: 30),
+                      Text(
+                        " = ${(double.parse(snapshot.data[turler[dovizIndex]]["alis"]) * girilenDeger).toStringAsFixed(2)} ",
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),
+                      ),
+                      Image.asset("assets/images/10.png", width: 30, height: 30),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Text("$girilenDeger ", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30)),
+                      Image.asset("assets/images/10.png", width: 30, height: 30),
+                      Text(
+                        " = ${(girilenDeger / double.parse(snapshot.data[turler[dovizIndex]]["alis"])).toStringAsFixed(2)} ",
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 30),
+                      ),
+                      Image.asset("assets/images/${dovizIndex + 1}.png", width: 30, height: 30),
+                    ],
+                  ),
+                ],
+              ),
             );
           }
           else {

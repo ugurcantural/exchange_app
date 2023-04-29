@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.black,
-          shadowColor: Colors.black,
+          shadowColor: Colors.white,
           surfaceTintColor: Colors.black,
         ),
       ),

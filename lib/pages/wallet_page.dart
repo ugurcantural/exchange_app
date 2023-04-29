@@ -130,6 +130,7 @@ class _WalletPageState extends State<WalletPage> {
               child: Column(
                 children: [
                   //bakiye
+                  SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -159,7 +160,7 @@ class _WalletPageState extends State<WalletPage> {
                       itemCount: 9,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Container(
                                   padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
