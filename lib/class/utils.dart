@@ -3,7 +3,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
   DateTime? guncelTarih;
   List<double> kurlar = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -15,16 +14,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
   Future<dynamic> DovizYukle() async {
     try {
-      if (kIsWeb) {
-        final dio = Dio();
-        dio.httpClientAdapter = HttpClientAdapter();
-        var response = await dio.get('https://api.genelpara.com/embed/para-birimleri.json');
-        return response.data;
-      }
-      else {
-        var response = await Dio().get('https://api.genelpara.com/embed/para-birimleri.json');
-        return response.data;
-      }
+      var response = await Dio().get('https://api.genelpara.com/embed/para-birimleri.json');
+      return response.data;
     } catch (e) {
       print("Hata $e");
     }
