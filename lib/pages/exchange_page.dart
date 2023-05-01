@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/settings_cubit.dart';
 import '../class/utils.dart';
 
 class ExchangePage extends StatefulWidget {
@@ -10,6 +12,7 @@ class ExchangePage extends StatefulWidget {
 }
 
 class _ExchangePageState extends State<ExchangePage> {
+  late final SettingsCubit settings;
   String _selectedItem = "Dolar";
   int dovizIndex = 0;
   int girilenDeger = 100;
@@ -18,6 +21,7 @@ class _ExchangePageState extends State<ExchangePage> {
   @override
   void initState() {
     super.initState();
+    settings = context.read<SettingsCubit>();
     checkInternetConnection(context);
     _controller = TextEditingController(text: girilenDeger.toString());
   }
@@ -47,12 +51,12 @@ class _ExchangePageState extends State<ExchangePage> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
+                          border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.grey),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
-                            dropdownColor: Colors.black,
+                            // dropdownColor: Colors.black,
                             alignment: Alignment.center,
                             value: _selectedItem,
                             onChanged: (newValue) {
@@ -66,11 +70,13 @@ class _ExchangePageState extends State<ExchangePage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    SizedBox(width: 10),
                                     Image.asset("assets/images/${adlar.indexOf(item) + 1}.png", width: 25, height: 25),
                                     SizedBox(width: 5),
                                     Text(item),
                                     SizedBox(width: 5),
                                     Text(snapshot.data[turler[adlar.indexOf(item)]]["alis"].toString()),
+                                    SizedBox(width: 10),
                                   ],
                                 ),
                                 onTap: () {
@@ -89,7 +95,7 @@ class _ExchangePageState extends State<ExchangePage> {
                   Container(
                     width: 200,
                     child: TextField(
-                      cursorColor: Colors.white,
+                      cursorColor: settings.state.darkMode ? Colors.white : Colors.black,
                       textAlign: TextAlign.center,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
@@ -99,7 +105,7 @@ class _ExchangePageState extends State<ExchangePage> {
                           borderRadius: BorderRadius.circular(10)
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: settings.state.darkMode ? Colors.white : Colors.black),
                           borderRadius: BorderRadius.circular(10)
                         ),
                       ),

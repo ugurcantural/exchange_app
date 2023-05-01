@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../bloc/settings_cubit.dart';
 import '../class/utils.dart';
 import 'exchange_page.dart';
 import 'wallet_page.dart';
@@ -15,9 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Timer? timer;
+  bool? dark;
   bool connect = false;
   bool isAuto = false;
   bool animation = true;
+  late final SettingsCubit settings;
 
   void changeAnimation() {
     Timer.periodic(Duration(seconds: 2), (timer) { 
@@ -32,6 +36,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     checkInternetConnection(context);
     changeAnimation();
+    settings = context.read<SettingsCubit>();
+    dark = settings.state.darkMode;
   }
 
   @override
@@ -131,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.white), 
+                                      border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.black), 
                                       borderRadius: BorderRadius.circular(10),
                                       color: double.parse(snapshot.data[turler[adlar.indexOf(e)]]["degisim"]) >= 0 ? 
                                       animation ? Colors.transparent : Colors.green  : 
@@ -187,9 +193,12 @@ class _HomePageState extends State<HomePage> {
                                     Text("Karanlık tema: "),
                                     Switch(
                                       activeColor: Colors.red,
-                                      value: isAuto,
+                                      value: dark!,
                                       onChanged: (value) {
-                                        //karanlık tema değiştir
+                                        setState(() {
+                                          dark = value;
+                                          settings.changeDarkMode(dark!);
+                                        });
                                       },
                                     ),
                                   ],
@@ -202,11 +211,11 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: settings.state.darkMode ? Colors.white : Colors.black,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     child: InkWell(
-                                      child: Icon(Icons.currency_exchange_outlined, color: Colors.black, size: 28),
+                                      child: Icon(Icons.currency_exchange_outlined, color: settings.state.darkMode ? Colors.black : Colors.white, size: 28),
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           return ExchangePage();
@@ -218,11 +227,11 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: settings.state.darkMode ? Colors.white : Colors.black,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     child: InkWell(
-                                      child: Icon(Icons.account_balance_wallet_outlined, color: Colors.black, size: 30),
+                                      child: Icon(Icons.account_balance_wallet_outlined, color: settings.state.darkMode ? Colors.black : Colors.white, size: 30),
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           return WalletPage();
@@ -233,27 +242,27 @@ class _HomePageState extends State<HomePage> {
                                   SizedBox(width: 20),
                                 ],
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 15),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: Colors.white),
+                                      border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.black),
                                     ),
                                     child: Row(
                                       children: [
                                         IconButton(
-                                          icon: FaIcon(FontAwesomeIcons.github),
+                                          icon: FaIcon(FontAwesomeIcons.github, color: Colors.purple,),
                                           onPressed: () => socialTap("github", "ugurcantural"),
                                         ),
                                         IconButton(
-                                          icon: FaIcon(FontAwesomeIcons.linkedin),
+                                          icon: FaIcon(FontAwesomeIcons.linkedin, color: Colors.blue,),
                                           onPressed: () => socialTap("linkedin", "in/uğurcan-tural-202702243"),
                                         ),
                                         IconButton(
-                                          icon: FaIcon(FontAwesomeIcons.instagram),
+                                          icon: FaIcon(FontAwesomeIcons.instagram, color: Colors.pink,),
                                           onPressed: () => socialTap("instagram", "birugurtu"),
                                         ),
                                       ],
@@ -436,7 +445,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
                           padding: EdgeInsets.symmetric(vertical: 5),
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
+                            border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.black),
                             borderRadius: BorderRadius.circular(10)
                           ),
                           child: Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center)

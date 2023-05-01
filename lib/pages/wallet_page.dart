@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../bloc/settings_cubit.dart';
 import '../class/utils.dart';
 
 class WalletPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
+  late final SettingsCubit settings;
 
   double toplamTl = 0;
   List<double> toplamBakiye = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -35,6 +38,7 @@ class _WalletPageState extends State<WalletPage> {
   @override
   void initState() {
     super.initState();
+    settings = context.read<SettingsCubit>();
     checkInternetConnection(context);
     Getir();
   }
@@ -81,22 +85,15 @@ class _WalletPageState extends State<WalletPage> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    backgroundColor: Colors.black,
+                    // backgroundColor: Colors.black,
                     title: Text("Kaydet"),
                     content: Text("Cüzdan kayıt edilsin mi?"),
                     actions: [
                       TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                        ),
                         child: Text("Vazgeç"),
                         onPressed: () => Navigator.pop(context),
                       ),
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black
-                        ),
                         child: Text("Kaydet"),
                         onPressed: () async {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -164,7 +161,7 @@ class _WalletPageState extends State<WalletPage> {
                           child: Container(
                                   padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[900],
+                                    color: settings.state.darkMode ?  Colors.grey[900] : Colors.black12,
                                     borderRadius: BorderRadius.circular(20)
                                   ),
                                   child: Column(
@@ -206,7 +203,7 @@ class _WalletPageState extends State<WalletPage> {
                                             flex: 4,
                                             child: TextField(
                                               controller: _controllers[index],
-                                              cursorColor: Colors.white,
+                                              cursorColor: settings.state.darkMode ? Colors.white : Colors.black,
                                               textAlign: TextAlign.center,
                                               textAlignVertical: TextAlignVertical.center,
                                               decoration: InputDecoration(
@@ -216,7 +213,7 @@ class _WalletPageState extends State<WalletPage> {
                                                   borderRadius: BorderRadius.circular(20)
                                                 ),
                                                 focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.white),
+                                                  borderSide: BorderSide(color: settings.state.darkMode ? Colors.white : Colors.black),
                                                   borderRadius: BorderRadius.circular(20)
                                                 ),
                                               ),
