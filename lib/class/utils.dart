@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:http/http.dart' as http;
-// import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,11 +14,8 @@ import 'package:flutter/services.dart';
 
   Future<dynamic> DovizYukle() async {
     try {
-      // var response = await Dio().get('https://api.genelpara.com/embed/para-birimleri.json');
-      // return response.data;
-      final response = await http.get(Uri.parse('https://api.genelpara.com/embed/para-birimleri.json'));
-      final data = jsonDecode(response.body);
-      return data;
+      var response = await Dio().get('https://api.genelpara.com/embed/para-birimleri.json');
+      return response.data;
     } catch (e) {
       print("Hata $e");
     }
