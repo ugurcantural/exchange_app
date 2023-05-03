@@ -5,9 +5,12 @@
 
 ## screenshots
 
-<p>
+<p style="text-align:center">
   <img src="screenshots/anasayfa_ss.jpg" height="500">
   <img src="screenshots/grafik_ss.jpg" height="500">
+</p>
+
+<p style="text-align:center">
   <img src="screenshots/ceviri_ss.jpg" height="500">
   <img src="screenshots/cüzdan_ss.jpg" height="500">
 </p>
