@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../bloc/settings_cubit.dart';
 import '../class/utils.dart';
+import 'chart_page.dart';
 import 'exchange_page.dart';
 import 'wallet_page.dart';
 
@@ -51,8 +52,8 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
             return RefreshIndicator(
-              backgroundColor: Colors.black,
-                color: Colors.white,
+              backgroundColor: dark! ? Colors.white : Colors.black,
+                color: dark! ? Colors.black : Colors.white,
                 onRefresh: () async {
                   checkInternetConnection(context);
                   // print(snapshot.data);
@@ -103,50 +104,65 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: 10),
                       Column(
                         children: adlar.map((e) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 25,
-                                        width: 25,
-                                        child: Image.asset("assets/images/${adlar.indexOf(e) + 1}.png"),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(adlar[adlar.indexOf(e)], style: Theme.of(context).textTheme.titleMedium,),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  flex: 4,
-                                  child: dovizMethod(snapshot.data[turler[adlar.indexOf(e)]]["satis"].toString()),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  flex: 4,
-                                  child: dovizMethod(snapshot.data[turler[adlar.indexOf(e)]]["alis"].toString()),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.black), 
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: double.parse(snapshot.data[turler[adlar.indexOf(e)]]["degisim"]) >= 0 ? 
-                                      animation ? Colors.transparent : Colors.green  : 
-                                      animation ? Colors.transparent : Colors.red,
+                          return InkWell(
+                            onTap: () {
+                              if (adlar.indexOf(e) <= allList.length - 1) {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return ChartPage(
+                                    name: adlar[adlar.indexOf(e)],
+                                    satis: double.parse(snapshot.data[turler[adlar.indexOf(e)]]["satis"]),
+                                    list: allList[adlar.indexOf(e)],
+                                  ); 
+                                }));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: Duration(seconds: 1), content: Text("Grafik Bulunamadı!")));
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 5,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 25,
+                                          width: 25,
+                                          child: Image.asset("assets/images/${adlar.indexOf(e) + 1}.png"),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(adlar[adlar.indexOf(e)], style: Theme.of(context).textTheme.titleMedium,),
+                                      ],
                                     ),
-                                    child: Text(snapshot.data[turler[adlar.indexOf(e)]]["degisim"].toString(), style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center)
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 4,
+                                    child: dovizMethod(snapshot.data[turler[adlar.indexOf(e)]]["satis"].toString()),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 4,
+                                    child: dovizMethod(snapshot.data[turler[adlar.indexOf(e)]]["alis"].toString()),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(vertical: 5),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: dark! ? Colors.white : Colors.black), 
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: double.parse(snapshot.data[turler[adlar.indexOf(e)]]["degisim"]) >= 0 ? 
+                                        animation ? Colors.transparent : Colors.green  : 
+                                        animation ? Colors.transparent : Colors.red,
+                                      ),
+                                      child: Text(snapshot.data[turler[adlar.indexOf(e)]]["degisim"].toString(), style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center)
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         }).toList(),
@@ -211,11 +227,11 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: settings.state.darkMode ? Colors.white : Colors.black,
+                                      color: dark! ? Colors.white : Colors.black,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     child: InkWell(
-                                      child: Icon(Icons.currency_exchange_outlined, color: settings.state.darkMode ? Colors.black : Colors.white, size: 28),
+                                      child: Icon(Icons.currency_exchange_outlined, color: dark! ? Colors.black : Colors.white, size: 28),
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           return ExchangePage();
@@ -227,11 +243,11 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: settings.state.darkMode ? Colors.white : Colors.black,
+                                      color: dark! ? Colors.white : Colors.black,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     child: InkWell(
-                                      child: Icon(Icons.account_balance_wallet_outlined, color: settings.state.darkMode ? Colors.black : Colors.white, size: 30),
+                                      child: Icon(Icons.account_balance_wallet_outlined, color: dark! ? Colors.black : Colors.white, size: 30),
                                       onTap: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                                           return WalletPage();
@@ -249,7 +265,7 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.black),
+                                      border: Border.all(color: dark! ? Colors.white : Colors.black),
                                     ),
                                     child: Row(
                                       children: [
@@ -445,7 +461,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
                           padding: EdgeInsets.symmetric(vertical: 5),
                           decoration: BoxDecoration(
-                            border: Border.all(color: settings.state.darkMode ? Colors.white : Colors.black),
+                            border: Border.all(color: dark! ? Colors.white : Colors.black),
                             borderRadius: BorderRadius.circular(10)
                           ),
                           child: Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.center)

@@ -4,7 +4,37 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+  List months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+
+  class ChartData {
+    final String date;
+    final double oran;
+    ChartData(this.date, this.oran);
+  }
+
+  final List<ChartData> chartDolar = [
+    ChartData("1 ${months[1]} 23", 18.8063),
+    ChartData("15 ${months[1]} 23", 18.8469),
+    ChartData("1 ${months[2]} 23", 18.8820),
+    ChartData("15 ${months[2]} 23", 18.9894),
+    ChartData("3 ${months[3]} 23", 19.1942),
+    ChartData("17 ${months[3]} 23", 19.3905),
+  ];
+
+  // final List<ChartData> chartEuro = [
+  //   ChartData("1 ${months[1]}", 18.8063),
+  //   ChartData("1 ${months[2]}", 18.8820),
+  //   ChartData("3 ${months[3]}", 19.1942)
+  // ];
+
+  final List allList = [
+    chartDolar
+  ];
+
   DateTime? guncelTarih;
+
+  // List<double> dolarKurlari = [18.8063, 18.8820, 19.1942];
+
   List<double> kurlar = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   List<String> turler = ["USD", "EUR", "GBP", "GA", "C", "GAG", "BTC", "ETH", "XU100"];
