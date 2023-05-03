@@ -25,7 +25,3 @@
 ## api
 
 - [Genel Para Api](https://api.genelpara.com/embed/para-birimleri.json)
-
-## demo
-
-- [Web Demo](https://dovizkurlari.netlify.app)
