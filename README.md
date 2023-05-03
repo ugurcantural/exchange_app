@@ -1,16 +1,27 @@
-# doviz_kurlari
+# döviz kurları
 
-A new Flutter project.
+**Flutter** kullanarak geliştirmiş olduğum döviz uygulaması. Güncel döviz kurlarını görüntüleyebilir, TL cinsinden karşılığını sorgulayabilirsiniz. Kendi cüzdanınızı oluşturup, kaydedebilirsiniz.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## screenshots
 
-A few resources to get you started if this is your first Flutter project:
+<p>
+  <img src="screenshots/anasayfa_ss.jpg" height="500">
+  <img src="screenshots/grafik_ss.jpg" height="500">
+  <img src="screenshots/ceviri_ss.jpg" height="500">
+  <img src="screenshots/cüzdan_ss.jpg" height="500">
+</p>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## packages
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Dio](https://pub.dev/packages/dio)
+- [Connectivity Plus](https://pub.dev/packages/connectivity_plus)
+- [Font Awesome](https://pub.dev/packages/font_awesome_flutter)
+- [Url Launcher](https://pub.dev/packages/url_launcher)
+- [Shared Preferences](https://pub.dev/packages/shared_preferences)
+- [Flutter Bloc](https://pub.dev/packages/flutter_bloc)
+- [Syncfusion Flutter Charts](https://pub.dev/packages/syncfusion_flutter_charts)
+
+## api
+
+api: https://api.genelpara.com/embed/para-birimleri.json
