@@ -167,128 +167,155 @@ class _HomePageState extends State<HomePage> {
                           );
                         }).toList(),
                       ),
-                      Column(
-                            children: [
-                              SizedBox(height: 10),
-                              Container(
-                                height: 25,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text("Otomatik güncelle(30s): "),
-                                    Switch(
-                                      activeColor: Colors.red,
-                                      value: isAuto,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isAuto = value;
-                                        });
-                                        if (isAuto == true) {
-                                          timer = Timer.periodic(Duration(seconds: 30), (timer) { 
-                                            doviz = DovizYukle();
-                                            guncelTarih = DateTime.now();
-                                            // checkInternetConnection(context);
-                                            // print('on saniye');
-                                          });
-                                        }
-                                        else {
-                                          timer!.cancel();
-                                          // print('güncelleme kapalı');
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(), 
+                          // InkWell(
+                          //   child: 
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/kk.png",
+                                height: 80,
                               ),
-                              SizedBox(height: 10),
-                              Container(
-                                height: 25,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text("Karanlık tema: "),
-                                    Switch(
-                                      activeColor: Colors.red,
-                                      value: dark!,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          dark = value;
-                                          settings.changeDarkMode(dark!);
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                            ),
+                            // onTap: () async {
+                            //   const url = 'https://mutabakat.netlify.app';
+                            //   final uri = Uri.parse(url);
+                            //   if (await canLaunchUrl(uri)) {
+                            //     await launchUrl(uri);
+                            //   } else {
+                            //     throw 'Could not launch $url';
+                            //   }
+                            // },
+                          // ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
+                                  SizedBox(height: 10),
                                   Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: dark! ? Colors.white : Colors.black,
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: InkWell(
-                                      child: Icon(Icons.currency_exchange_outlined, color: dark! ? Colors.black : Colors.white, size: 28),
-                                      onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          return ExchangePage();
-                                        }));
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: dark! ? Colors.white : Colors.black,
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: InkWell(
-                                      child: Icon(Icons.account_balance_wallet_outlined, color: dark! ? Colors.black : Colors.white, size: 30),
-                                      onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          return WalletPage();
-                                        }));
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                ],
-                              ),
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: dark! ? Colors.white : Colors.black),
-                                    ),
+                                    height: 25,
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        IconButton(
-                                          icon: FaIcon(FontAwesomeIcons.github, color: Colors.purple,),
-                                          onPressed: () => socialTap("github", "ugurcantural"),
-                                        ),
-                                        IconButton(
-                                          icon: FaIcon(FontAwesomeIcons.linkedin, color: Colors.blue,),
-                                          onPressed: () => socialTap("linkedin", "in/uğurcan-tural-202702243"),
-                                        ),
-                                        IconButton(
-                                          icon: FaIcon(FontAwesomeIcons.instagram, color: Colors.pink,),
-                                          onPressed: () => socialTap("instagram", "birugurtu"),
+                                        Text("Otomatik güncelle(30s): "),
+                                        Switch(
+                                          activeColor: Colors.red,
+                                          value: isAuto,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              isAuto = value;
+                                            });
+                                            if (isAuto == true) {
+                                              timer = Timer.periodic(Duration(seconds: 30), (timer) { 
+                                                doviz = DovizYukle();
+                                                guncelTarih = DateTime.now();
+                                                // checkInternetConnection(context);
+                                                // print('on saniye');
+                                              });
+                                            }
+                                            else {
+                                              timer!.cancel();
+                                              // print('güncelleme kapalı');
+                                            }
+                                          },
                                         ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  SizedBox(height: 10),
+                                  Container(
+                                    height: 25,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text("Karanlık tema: "),
+                                        Switch(
+                                          activeColor: Colors.red,
+                                          value: dark!,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              dark = value;
+                                              settings.changeDarkMode(dark!);
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: dark! ? Colors.white : Colors.black,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: InkWell(
+                                          child: Icon(Icons.currency_exchange_outlined, color: dark! ? Colors.black : Colors.white, size: 28),
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return ExchangePage();
+                                            }));
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(width: 20),
+                                      Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: dark! ? Colors.white : Colors.black,
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                        child: InkWell(
+                                          child: Icon(Icons.account_balance_wallet_outlined, color: dark! ? Colors.black : Colors.white, size: 30),
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return WalletPage();
+                                            }));
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(width: 20),
+                                    ],
+                                  ),
+                                  SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(color: dark! ? Colors.white : Colors.black),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            IconButton(
+                                              icon: FaIcon(FontAwesomeIcons.github, color: Colors.purple,),
+                                              onPressed: () => socialTap("github", "ugurcantural"),
+                                            ),
+                                            IconButton(
+                                              icon: FaIcon(FontAwesomeIcons.linkedin, color: Colors.blue,),
+                                              onPressed: () => socialTap("linkedin", "in/uğurcan-tural-202702243"),
+                                            ),
+                                            IconButton(
+                                              icon: FaIcon(FontAwesomeIcons.instagram, color: Colors.pink,),
+                                              onPressed: () => socialTap("instagram", "birugurtu"),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ],
-                          ),
+                        ],
+                      ),
                       // Expanded(
                       //   flex: 3,
                       //   child: ListView.builder(
